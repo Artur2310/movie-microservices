@@ -19,8 +19,6 @@ public class MovieParserController {
 
     @GetMapping
     public ResponseEntity<Movie> parseMoviePage(@PathVariable Integer id) {
-        return parserService.parse(id)
-                .map(movie -> ResponseEntity.ok().body(movie))
-                .orElseThrow(() -> new ParseException());
+        return ResponseEntity.ok().body(parserService.parse(id));
     }
 }

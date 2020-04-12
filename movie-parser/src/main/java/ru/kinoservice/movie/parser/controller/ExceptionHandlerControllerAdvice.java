@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestController;
 import ru.kinoservice.movie.parser.exception.PageAccessException;
 import ru.kinoservice.movie.parser.exception.ParseException;
+import ru.kinoservice.movie.parser.exception.ValidateUrlParameterException;
 
 @ControllerAdvice(annotations = RestController.class)
 public class ExceptionHandlerControllerAdvice {
@@ -21,6 +22,11 @@ public class ExceptionHandlerControllerAdvice {
     @ExceptionHandler(ParseException.class)
     ResponseEntity<ApiException> handleParseException(){
         return new ResponseEntity<>(new ApiException("Error during parsing"), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @ExceptionHandler(ValidateUrlParameterException.class)
+    ResponseEntity<ApiException> handleValidateUrlParameterException(){
+        return new ResponseEntity<>(new ApiException("Validate url exception"), HttpStatus.BAD_REQUEST);
     }
 
     @Data

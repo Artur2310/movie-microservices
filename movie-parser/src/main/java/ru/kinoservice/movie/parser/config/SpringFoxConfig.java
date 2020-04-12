@@ -16,7 +16,7 @@ public class SpringFoxConfig  {
     public Docket apiDocket() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
-                .apis(RequestHandlerSelectors.any())
+                .apis(RequestHandlerSelectors.basePackage("ru.kinoservice.movie.parser.controller"))
                 .paths(PathSelectors.any())
                 .build();
     }

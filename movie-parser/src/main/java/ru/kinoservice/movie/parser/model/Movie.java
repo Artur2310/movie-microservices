@@ -3,9 +3,6 @@ package ru.kinoservice.movie.parser.model;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.HashSet;
-import java.util.Set;
-
 @Data
 @NoArgsConstructor
 public class Movie {
@@ -14,7 +11,7 @@ public class Movie {
 
     private String url;
 
-    private int pictureId;
+    private String imageUrl;
 
     private String title;
 
@@ -23,7 +20,5 @@ public class Movie {
     private String description;
 
     private String genre;
-
-    private Set<Integer> actors = new HashSet<Integer>();
 
 }
