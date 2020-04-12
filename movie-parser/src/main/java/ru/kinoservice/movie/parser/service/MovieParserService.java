@@ -10,10 +10,8 @@ import ru.kinoservice.movie.parser.exception.PageAccessException;
 import ru.kinoservice.movie.parser.exception.ParseException;
 import ru.kinoservice.movie.parser.model.Movie;
 import ru.kinoservice.movie.parser.util.MovieConverter;
-import sun.security.pkcs.ParsingException;
 
 import java.io.IOException;
-import java.util.Optional;
 
 @Service
 public class MovieParserService implements ParserService {
@@ -41,6 +39,7 @@ public class MovieParserService implements ParserService {
             movie.setId(id);
             movie.setUrl(fullUrl);
             return movie;
+
         } catch (IOException e){
             logger.error("Connection error :" + fullUrl, e);
             throw new PageAccessException();

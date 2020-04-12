@@ -5,6 +5,7 @@ import org.jsoup.nodes.Document;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import javax.net.ssl.*;
 import java.io.IOException;
 import java.security.KeyManagementException;
@@ -20,10 +21,14 @@ public class ProxyConnectionService implements ConnectionService {
     @Value("${portProxy}")
     private String portProxy;
 
-    @Override
-    public Document getDocument(String url) throws IOException {
+    @PostConstruct
+    public void init(){
         System.setProperty("https.proxyHost", hostProxy);
         System.setProperty("https.proxyPort", portProxy);
+    }
+
+    @Override
+    public Document getDocument(String url) throws IOException {
         return Jsoup.connect(url).timeout(30 * 1000).get();
     }
 
