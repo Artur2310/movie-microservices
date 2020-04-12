@@ -13,6 +13,7 @@ import ru.kinoservice.image.downloader.annotation.UrlFormatConstraint;
 import ru.kinoservice.image.downloader.exception.ImageDownloadException;
 import ru.kinoservice.image.downloader.service.DownloaderSerice;
 
+import java.awt.image.BufferedImage;
 import java.util.Optional;
 
 @RestController
@@ -23,13 +24,11 @@ public class ImageDownloadController {
     @Autowired
     private DownloaderSerice downloaderSerice;
 
-    @GetMapping
-    ResponseEntity<Resource> download(@UrlFormatConstraint @RequestParam(name = "url", required = false) String url) {
+    @GetMapping(produces = "image/png")
+    ResponseEntity<byte []> download(@UrlFormatConstraint @RequestParam(name = "url", required = false) String url) {
         return Optional.ofNullable(downloaderSerice.download(url))
-                .map(image -> {
-                    Resource byteArrayResource = new ByteArrayResource(image);
-                    return ResponseEntity.ok().body(byteArrayResource);
-                }).orElseThrow(() -> new ImageDownloadException());
+                .map(image -> ResponseEntity.ok().body(image)
+                ).orElseThrow(() -> new ImageDownloadException());
     }
 
 }

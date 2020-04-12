@@ -5,3 +5,8 @@ services:
                 container_name: discovery-service
                 ports:
                    - 8761:8761
+     image-downloader:
+                build: ./image-downloader
+                container_name: image-downloader
+                ports:
+                   - 7777:7777
