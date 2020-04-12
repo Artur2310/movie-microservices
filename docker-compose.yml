@@ -19,3 +19,15 @@ services:
                      EUREKA_INSTANCE_PREFER_IP_ADDRESS: "true"
                      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://discovery-service:8761/eureka/
 
+     movie-parser:
+                build: ./movie-parser
+                container_name: movie-parser
+                depends_on:
+                  - discovery-service
+                  - image-downloader
+                ports:
+                  - 6677:6677
+                environment:
+                      EUREKA_INSTANCE_PREFER_IP_ADDRESS: "true"
+                      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://discovery-service:8761/eureka/
+
