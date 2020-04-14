@@ -24,7 +24,7 @@ public class MovieParserService implements ParserService {
     @Autowired
     MovieConverter converter;
 
-    @Value("${url}")
+    @Value("${parse.url}")
     private String url;
 
     @Override
@@ -40,10 +40,10 @@ public class MovieParserService implements ParserService {
             movie.setUrl(fullUrl);
             return movie;
 
-        } catch (IOException e){
+        } catch (IOException e) {
             logger.error("Connection error :" + fullUrl, e);
-            throw new PageAccessException();
-        } catch (ParseException e){
+            throw new PageAccessException(e);
+        } catch (ParseException e) {
             logger.error("Parse exception movie :" + id);
             throw e;
         }

@@ -9,19 +9,20 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestController;
 import ru.kinoservice.movie.parser.exception.PageAccessException;
 import ru.kinoservice.movie.parser.exception.ParseException;
+import ru.kinoservice.movie.parser.exception.TooManyConnectionsException;
 import ru.kinoservice.movie.parser.exception.ValidateUrlParameterException;
 
 @ControllerAdvice(annotations = RestController.class)
 public class ExceptionHandlerControllerAdvice {
 
     @ExceptionHandler(PageAccessException.class)
-    ResponseEntity<ApiException> handlePageAccessException(){
-        return new ResponseEntity<>(new ApiException("Access page error"), HttpStatus.FORBIDDEN);
+    ResponseEntity<ApiException> handlePageAccessException(PageAccessException e){
+        return new ResponseEntity<>(new ApiException("Access page error", e.getStackTrace().toString()), HttpStatus.FORBIDDEN);
     }
 
     @ExceptionHandler(ParseException.class)
-    ResponseEntity<ApiException> handleParseException(){
-        return new ResponseEntity<>(new ApiException("Error during parsing"), HttpStatus.INTERNAL_SERVER_ERROR);
+    ResponseEntity<ApiException> handleParseException(ParseException e){
+        return new ResponseEntity<>(new ApiException("Error during parsing", e.getStackTrace().toString()), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @ExceptionHandler(ValidateUrlParameterException.class)
@@ -29,9 +30,19 @@ public class ExceptionHandlerControllerAdvice {
         return new ResponseEntity<>(new ApiException("Validate url exception"), HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler(TooManyConnectionsException.class)
+    ResponseEntity<ApiException> handleTooManyConnectionsException(){
+        return new ResponseEntity<>(new ApiException("Too many open connections"), HttpStatus.TOO_MANY_REQUESTS);
+    }
+
     @Data
     @AllArgsConstructor
     private static class ApiException {
         private String message;
+        private String stackTrace;
+
+        public ApiException(String message){
+            this.message = message;
+        }
     }
 }

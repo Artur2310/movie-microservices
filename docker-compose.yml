@@ -5,6 +5,7 @@ services:
                 container_name: discovery-service
                 ports:
                    - 8761:8761
+                   - 9010:9010
                 environment:
                    - EUREKA_INSTANCE_PREFERIPADDRESS=true
 
@@ -15,19 +16,25 @@ services:
                       - discovery-service
                 ports:
                    - 7777:7777
+                   - 9011:9011
                 environment:
                      EUREKA_INSTANCE_PREFER_IP_ADDRESS: "true"
                      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://discovery-service:8761/eureka/
+
+     tor-proxy:
+                image: dperson/torproxy
+                container_name: service-proxy
 
      movie-parser:
                 build: ./movie-parser
                 container_name: movie-parser
                 depends_on:
                   - discovery-service
-                  - image-downloader
+                  - tor-proxy
                 ports:
                   - 6677:6677
+                  - 9012:9012
                 environment:
                       EUREKA_INSTANCE_PREFER_IP_ADDRESS: "true"
                       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://discovery-service:8761/eureka/
-
+                      proxy.host: tor-proxy

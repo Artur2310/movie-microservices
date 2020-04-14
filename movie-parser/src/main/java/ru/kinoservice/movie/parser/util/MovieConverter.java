@@ -35,7 +35,7 @@ public class MovieConverter {
         if (!elms.isEmpty()) {
             return elms.get(0).text();
         } else {
-            logger.error("Name actor not found!");
+            logger.error("Movie title not found!");
             throw new ParseException();
         }
     }
