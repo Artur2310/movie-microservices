@@ -36,7 +36,7 @@ public class MovieParserService implements ParserService {
             Document doc = connectionService.getDocument(fullUrl);
 
             Movie movie = converter.convertDocumentToMovie(doc);
-            movie.setId(id);
+            movie.setSourceId(id);
             movie.setUrl(fullUrl);
             return movie;
 
