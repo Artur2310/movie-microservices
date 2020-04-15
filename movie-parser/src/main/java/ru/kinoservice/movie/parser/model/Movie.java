@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Movie {
 
-    private Integer id;
+    private Integer sourceId;
 
     private String url;
 
