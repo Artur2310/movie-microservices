@@ -18,11 +18,16 @@ public class GeneralParseStarter implements ParseStarter {
     private ReentrantLock parseLock;
 
     public void start() {
+        if (parseLock.tryLock()) {
+            parse();
+        }
+
+    }
+
+    private void parse() {
         try {
-            if (parseLock.tryLock()) {
-                parseLock.lock();
-                parseStarter.start();
-            }
+            parseLock.lock();
+            parseStarter.start();
         } finally {
             parseLock.unlock();
         }

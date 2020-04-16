@@ -28,7 +28,7 @@ public class MovieParseStarterLogger {
 
     @AfterReturning("callParseMovieMethod()")
     public void afterReturningCallAt(JoinPoint jp) {
-        profileTime = (System.currentTimeMillis() - profileTime) / 60;
+        profileTime = (System.currentTimeMillis() - profileTime) / 1000;
         logger.info("End parse movies! Time = " + profileTime + " (second)");
     }
 
