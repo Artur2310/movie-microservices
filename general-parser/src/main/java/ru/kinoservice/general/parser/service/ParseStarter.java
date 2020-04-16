@@ -4,5 +4,4 @@ public interface ParseStarter {
 
     void start();
 
-    boolean isTerminated();
 }

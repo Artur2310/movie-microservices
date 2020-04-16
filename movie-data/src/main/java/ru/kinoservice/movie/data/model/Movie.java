@@ -10,6 +10,8 @@ import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.Date;
+
 @Document(collection = "movies")
 @Data
 @NoArgsConstructor
@@ -36,7 +38,11 @@ public class Movie {
 
     private String description;
 
-    private String genre;
+    private String genres;
+
+    private String countries;
+
+    private Date date;
 
 }
 

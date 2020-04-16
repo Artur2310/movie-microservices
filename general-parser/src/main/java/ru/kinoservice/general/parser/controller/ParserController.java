@@ -1,20 +1,22 @@
 package ru.kinoservice.general.parser.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-import ru.kinoservice.general.parser.service.MovieParseStarter;
+import ru.kinoservice.general.parser.service.GeneralParseStarter;
 
 @RestController
 public class ParserController {
 
     @Autowired
-    MovieParseStarter movieParseStarter;
+    @Qualifier("generalParseStarter")
+    GeneralParseStarter generalParseStarter;
 
     @GetMapping(value = "/start")
     public ResponseEntity<?> startParse(){
-        movieParseStarter.start();
+        generalParseStarter.start();
         return ResponseEntity.noContent().build();
     }
 }

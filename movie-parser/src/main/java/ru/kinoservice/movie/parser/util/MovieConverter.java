@@ -9,9 +9,12 @@ import ru.kinoservice.movie.parser.exception.ParseException;
 import ru.kinoservice.movie.parser.model.Movie;
 import ru.kinoservice.movie.parser.service.MovieParserService;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 @Component
 public class MovieConverter {
@@ -24,7 +27,9 @@ public class MovieConverter {
         movie.setDescription(parseDescription(doc));
         movie.setImdb(parseIMDB(doc));
         movie.setImageUrl(parseImage(doc));
-        movie.setGenre(parseGenre(doc));
+        movie.setGenres(parseGenre(doc));
+        movie.setCountries(parseCountries(doc));
+        movie.setDate(parseDate(doc));
         return movie;
     }
 
@@ -87,7 +92,6 @@ public class MovieConverter {
         } else {
             logger.error("Description not found");
             throw new ParseException();
-
         }
     }
 
@@ -95,12 +99,7 @@ public class MovieConverter {
 
         List<Element> elms = doc.select("div[class=block view] ul li a");
 
-        if (!elms.isEmpty()) {
-            return elms.get(0).text();
-        }
-
-        logger.info("Genre not found!");
-        return null;
+        return elms.stream().filter(e -> e.toString().contains("category_id")).map(e -> e.text()).collect(Collectors.joining(", "));
     }
 
     private String parseImage(Document doc) {
@@ -111,5 +110,30 @@ public class MovieConverter {
             return null;
 
         return elms.get(0).attr("src");
+    }
+
+    private String parseCountries(Document doc) {
+        List<Element> elms = doc.select("div[class=block view] ul li a");
+
+        return elms.stream()
+                .filter(e -> e.toString().contains("country_id"))
+                .map(e -> e.text())
+                .collect(Collectors.joining(", "));
+    }
+
+    private Date parseDate(Document doc) {
+        List<Element> elms = doc.select("div[class=block view] ul li span");
+
+        return elms.stream()
+                .filter(e -> e.parent().text().contains("Дата выпуска"))
+                .map(e -> {
+                    try {
+                        return new SimpleDateFormat("dd MMM yyyy").parse(e.text());
+                    } catch (java.text.ParseException ex) {
+                        logger.error("Error parse date movie! ");
+                        throw new ParseException();
+                    }
+                })
+                .findFirst().get();
     }
 }

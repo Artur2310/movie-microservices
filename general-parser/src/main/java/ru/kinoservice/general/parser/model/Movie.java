@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.beans.Transient;
+import java.util.Date;
 
 @Data
 @NoArgsConstructor
@@ -28,7 +29,11 @@ public class Movie {
 
     private String description;
 
-    private String genre;
+    private String genres;
+
+    private String countries;
+
+    private Date date;
 
 }
 

@@ -70,4 +70,11 @@ public class CRUDController {
     public ResponseEntity<Long> getCount() {
         return ResponseEntity.ok().body(movieRepository.count());
     }
+
+    @GetMapping(value = "/get-last-parsered")
+    public ResponseEntity<Integer> getLastParsered() {
+        return movieRepository.findTopByOrderBySourceIdDesc()
+                .map(movie -> ResponseEntity.ok().body(movie.getSourceId()))
+                .orElseGet(() -> ResponseEntity.ok().body(0));
+    }
 }

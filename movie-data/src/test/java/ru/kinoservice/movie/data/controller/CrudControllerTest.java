@@ -60,7 +60,7 @@ public class CrudControllerTest {
     public void addMovieTest() throws Exception {
         Movie movie = Movie.builder()
                 .description("0")
-                .genre("genre")
+                .genres("genres")
                 .imageUrl("imageUrl")
                 .title("Test")
                 .imdb(5.5f)
@@ -77,7 +77,7 @@ public class CrudControllerTest {
                 .andExpect(jsonPath("$.title").value("Test"))
                 .andExpect(jsonPath("$.imageUrl").value("imageUrl"))
                 .andExpect(jsonPath("$.imdb").value(5.5f))
-                .andExpect(jsonPath("$.genre").value("genre"))
+                .andExpect(jsonPath("$.genres").value("genres"))
                 .andExpect(jsonPath("$.sourceId").value(0));
 
       /*  mockMvc.perform(get(PATH_GET_BY_ID + '/' + movie.getId()))
@@ -85,7 +85,7 @@ public class CrudControllerTest {
                 .andExpect(jsonPath("$.title").value("Test"))
                 .andExpect(jsonPath("$.imageUrl").value("imageUrl"))
                 .andExpect(jsonPath("$.imdb").value(5.5f))
-                .andExpect(jsonPath("$.genre").value("genre"))
+                .andExpect(jsonPath("$.genres").value("genres"))
                 .andExpect(jsonPath("$.sourceId").value(0));*/
 
         mockMvc.perform(get(PATH_COUNT))

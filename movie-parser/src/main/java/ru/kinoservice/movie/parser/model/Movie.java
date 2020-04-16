@@ -3,6 +3,8 @@ package ru.kinoservice.movie.parser.model;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
+
 @Data
 @NoArgsConstructor
 public class Movie {
@@ -19,6 +21,10 @@ public class Movie {
 
     private String description;
 
-    private String genre;
+    private String genres;
+
+    private String countries;
+
+    private Date date;
 
 }
