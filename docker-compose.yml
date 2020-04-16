@@ -65,5 +65,18 @@ services:
                 volumes:
                    - mongodb_data_container:/data/db
 
+     general-parser:
+                build: ./general-parser
+                container_name: general-parser
+                depends_on:
+                  - movie-data
+                  - movie-parser
+                ports:
+                  - 6633:6633
+                  - 9015:9015
+                environment:
+                      EUREKA_INSTANCE_PREFER_IP_ADDRESS: "true"
+                      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://discovery-service:8761/eureka/
+
 volumes:
       mongodb_data_container:
