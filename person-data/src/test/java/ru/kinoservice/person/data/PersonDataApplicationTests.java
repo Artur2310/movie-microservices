@@ -1,10 +1,10 @@
-package ru.kinoservice.personparser;
+package ru.kinoservice.person.data;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class PersonParserApplicationTests {
+class PersonDataApplicationTests {
 
 	@Test
 	void contextLoads() {

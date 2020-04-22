@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 @Component
 public class MovieConverter {
 
-    private static Logger logger = LoggerFactory.getLogger(MovieParserService.class);
+    private static Logger logger = LoggerFactory.getLogger(MovieConverter.class);
 
     public Movie convertDocumentToMovie(Document doc) {
         Movie movie = new Movie();
