@@ -1,5 +1,4 @@
-package ru.kinoservice.movie.data.model;
-
+package ru.kinoservice.person.data.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -10,39 +9,31 @@ import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.Date;
+import java.util.ArrayList;
+import java.util.List;
 
-@Document(collection = "movies")
+@Document(collection = "persons")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Movie {
+public class Person {
 
     @Transient
-    public static final String SEQUENCE_NAME = "movies_sequence";
+    public static final String SEQUENCE_NAME = "person_sequence";
 
     @Id
     private Integer id;
 
     @Indexed(unique = true)
-    private Integer sourceId;
+    private int sourceId;
 
     private String url;
 
-    private String imageUrl;
+    private String pictureUrl;
 
-    private String title;
+    private String name;
 
-    private float imdb;
-
-    private String description;
-
-    private String genres;
-
-    private String countries;
-
-    private Date date;
+    private List<Integer> movies = new ArrayList<>();
 
 }
-
