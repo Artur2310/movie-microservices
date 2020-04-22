@@ -8,12 +8,18 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestController;
 import ru.kinoservice.movie.data.exception.MovieNotFoundException;
+import ru.kinoservice.movie.data.exception.PersonNotFoundException;
 
 @ControllerAdvice(annotations = RestController.class)
 public class ExceptionHandlerControllerAdvice {
 
     @ExceptionHandler(MovieNotFoundException.class)
     ResponseEntity<ApiException> handleMovieNotFoundException(MovieNotFoundException e){
+        return new ResponseEntity<>(new ApiException("Movie "+ String.valueOf(e.getId()) +" not found "), HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(PersonNotFoundException.class)
+    ResponseEntity<ApiException> handleMovieNotFoundException(PersonNotFoundException e){
         return new ResponseEntity<>(new ApiException("Movie "+ String.valueOf(e.getId()) +" not found "), HttpStatus.NOT_FOUND);
     }
 

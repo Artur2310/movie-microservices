@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import ru.kinoservice.general.parser.model.Movie;
 
-@FeignClient(name="movie-data")
+@FeignClient(name="data-manager")
 public interface MovieRepository {
 
     @PostMapping(value = "/add")

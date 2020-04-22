@@ -39,9 +39,9 @@ services:
                       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://discovery-service:8761/eureka/
                       proxy.host: tor-proxy
 
-     movie-data:
-                build: ./movie-data
-                container_name: movie-data
+     data-manager:
+                build: ./data-manager
+                container_name: data-manager
                 depends_on:
                   - discovery-service
                   - movie-parser
@@ -99,7 +99,7 @@ services:
                 build: ./general-parser
                 container_name: general-parser
                 depends_on:
-                  - movie-data
+                  - data-manager
                   - movie-parser
                 ports:
                   - 6633:6633

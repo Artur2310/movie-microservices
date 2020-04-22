@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>ru.kinoservice</groupId>
-	<artifactId>movie-data</artifactId>
+	<artifactId>data-manager</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>movie-data</name>
+	<name>data-manager</name>
 	<description>Movie DAO service</description>
 
 	<properties>

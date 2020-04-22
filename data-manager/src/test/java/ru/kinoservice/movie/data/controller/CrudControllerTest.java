@@ -43,7 +43,7 @@ public class CrudControllerTest {
     MockMvc mockMvc;
 
     @Autowired
-    CRUDController controller;
+    MovieCRUDController controller;
 
     private static String PATH_ADD = "/add";
     private static String PATH_GET_BY_ID = "/get-by-sourceId";
