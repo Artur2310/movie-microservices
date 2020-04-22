@@ -12,17 +12,21 @@ import ru.kinoservice.movie.parser.exception.ParseException;
 import ru.kinoservice.movie.parser.exception.TooManyConnectionsException;
 import ru.kinoservice.movie.parser.exception.ValidateUrlParameterException;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
+
 @ControllerAdvice(annotations = RestController.class)
 public class ExceptionHandlerControllerAdvice {
 
     @ExceptionHandler(PageAccessException.class)
     ResponseEntity<ApiException> handlePageAccessException(PageAccessException e){
-        return new ResponseEntity<>(new ApiException("Access page error", e.getStackTrace().toString()), HttpStatus.FORBIDDEN);
+        return new ResponseEntity<>(new ApiException("Access page error", getStackTrace(e)), HttpStatus.FORBIDDEN);
     }
 
     @ExceptionHandler(ParseException.class)
     ResponseEntity<ApiException> handleParseException(ParseException e){
-        return new ResponseEntity<>(new ApiException("Error during parsing", e.getStackTrace().toString()), HttpStatus.INTERNAL_SERVER_ERROR);
+
+        return new ResponseEntity<>(new ApiException("Error during parsing", getStackTrace(e)), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @ExceptionHandler(ValidateUrlParameterException.class)
@@ -44,5 +48,12 @@ public class ExceptionHandlerControllerAdvice {
         public ApiException(String message){
             this.message = message;
         }
+    }
+
+    private String getStackTrace(Exception e){
+        StringWriter sw = new StringWriter();
+        PrintWriter pw = new PrintWriter(sw);
+        e.printStackTrace(pw);
+        return sw.toString();
     }
 }

@@ -12,6 +12,7 @@ import ru.kinoservice.movie.parser.service.MovieParserService;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -128,7 +129,7 @@ public class MovieConverter {
                 .filter(e -> e.parent().text().contains("Дата выпуска"))
                 .map(e -> {
                     try {
-                        return new SimpleDateFormat("dd MMM yyyy").parse(e.text());
+                        return new SimpleDateFormat("dd MMM yyyy", Locale.ENGLISH).parse(e.text());
                     } catch (java.text.ParseException ex) {
                         logger.error("Error parse date movie! ");
                         throw new ParseException();

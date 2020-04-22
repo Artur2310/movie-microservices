@@ -21,7 +21,6 @@ public class GeneralParseStarter implements ParseStarter {
         if (parseLock.tryLock()) {
             parse();
         }
-
     }
 
     private void parse() {
