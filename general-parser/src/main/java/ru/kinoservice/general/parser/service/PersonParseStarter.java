@@ -5,29 +5,30 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
-import ru.kinoservice.general.parser.task.TaskParseMovie;
+import ru.kinoservice.general.parser.task.TaskParsePerson;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
 @Component
-@Qualifier("movieParseStarter")
+@Qualifier("personParseStarter")
 @RefreshScope
-public class MovieParseStarter extends BaseParseStarter{
+public class PersonParseStarter extends BaseParseStarter{
 
     @Autowired
     private ApplicationContext context;
 
     @Override
     Runnable getTaskParse(Integer numberItem, AtomicInteger countError, AtomicInteger threadLimit) {
-        TaskParseMovie taskParseMovie = (TaskParseMovie) context.getBean("taskParseMovie");
-        taskParseMovie.setNumberMovie(numberItem);
-        taskParseMovie.setCountErrorParsing(countError);
-        taskParseMovie.setThreadLimit(threadLimit);
-        return taskParseMovie;
+        TaskParsePerson taskParsePerson = (TaskParsePerson) context.getBean("taskParsePerson");
+        taskParsePerson.setNumber(numberItem);
+        taskParsePerson.setCountErrorParsing(countError);
+        taskParsePerson.setThreadLimit(threadLimit);
+        return taskParsePerson;
     }
 
     @Override
     Integer getLastItem() {
-        return repository.getLastParseredMovie().getBody() + 1;
+        return repository.getLastParseredPerson().getBody() + 1;
     }
+
 }

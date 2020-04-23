@@ -10,4 +10,6 @@ import java.util.Optional;
 public interface MovieRepository extends MongoRepository<Movie, Integer> {
 
     Optional<Movie> findTopByOrderBySourceIdDesc();
+
+    Optional<Movie> findMovieBySourceId(Integer id);
 }

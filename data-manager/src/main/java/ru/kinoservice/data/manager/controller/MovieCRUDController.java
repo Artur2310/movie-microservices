@@ -48,6 +48,13 @@ public class MovieCRUDController {
                 .orElseThrow(() -> new MovieNotFoundException(id));
     }
 
+    @GetMapping(value = "/get-by-source-id/{id}")
+    public ResponseEntity<Movie> getBySourceId(@PathVariable(value = "id") Integer id) {
+        return movieRepository.findMovieBySourceId(id)
+                .map(movie -> ResponseEntity.ok().body(movie))
+                .orElseThrow(() -> new MovieNotFoundException(id));
+    }
+
     @GetMapping(value = "/delete-by-id/{id}")
     public ResponseEntity<?> deleteById(@PathVariable(value = "id") Integer id) {
         return movieRepository.findById(id)

@@ -12,7 +12,11 @@ public class GeneralParseStarter implements ParseStarter {
 
     @Autowired
     @Qualifier("movieParseStarter")
-    private ParseStarter parseStarter;
+    private ParseStarter movieParseStarter;
+
+    @Autowired
+    @Qualifier("personParseStarter")
+    private ParseStarter personParseStarter;
 
     @Autowired
     private ReentrantLock parseLock;
@@ -26,7 +30,8 @@ public class GeneralParseStarter implements ParseStarter {
     private void parse() {
         try {
             parseLock.lock();
-            parseStarter.start();
+            movieParseStarter.start();
+            personParseStarter.start();
         } finally {
             parseLock.unlock();
         }
