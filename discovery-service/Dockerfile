@@ -1,4 +1,4 @@
-FROM maven:3.6.1-jdk-8-alpine
+FROM maven:3.6.1-jdk-11-alpine
 WORKDIR /app
 COPY . .
 RUN mvn clean package -DskipTests

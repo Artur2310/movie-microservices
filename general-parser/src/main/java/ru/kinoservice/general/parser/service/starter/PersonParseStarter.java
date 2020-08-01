@@ -1,10 +1,11 @@
-package ru.kinoservice.general.parser.service;
+package ru.kinoservice.general.parser.service.starter;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
+import ru.kinoservice.general.parser.service.starter.BaseParseStarter;
 import ru.kinoservice.general.parser.task.TaskParsePerson;
 
 import java.util.concurrent.atomic.AtomicInteger;
@@ -12,7 +13,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 @Component
 @Qualifier("personParseStarter")
 @RefreshScope
-public class PersonParseStarter extends BaseParseStarter{
+public class PersonParseStarter extends BaseParseStarter {
 
     @Autowired
     private ApplicationContext context;
@@ -24,11 +25,6 @@ public class PersonParseStarter extends BaseParseStarter{
         taskParsePerson.setCountErrorParsing(countError);
         taskParsePerson.setThreadLimit(threadLimit);
         return taskParsePerson;
-    }
-
-    @Override
-    Integer getLastItem() {
-        return repository.getLastParseredPerson().getBody() + 1;
     }
 
 }

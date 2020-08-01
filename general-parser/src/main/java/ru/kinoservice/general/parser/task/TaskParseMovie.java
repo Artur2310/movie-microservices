@@ -13,7 +13,6 @@ import org.springframework.stereotype.Component;
 import ru.kinoservice.general.parser.model.Movie;
 import ru.kinoservice.general.parser.service.CinemaRepository;
 import ru.kinoservice.general.parser.service.MovieParseStarter;
-import ru.kinoservice.general.parser.service.MovieParser;
 
 import java.util.concurrent.atomic.AtomicInteger;
 

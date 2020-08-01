@@ -3,17 +3,13 @@ package ru.kinoservice.general.parser.task;
 import feign.FeignException;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
-import ru.kinoservice.general.parser.model.Person;
 import ru.kinoservice.general.parser.service.CinemaRepository;
-import ru.kinoservice.general.parser.service.MovieParseStarter;
-import ru.kinoservice.general.parser.service.PersonParser;
+import ru.kinoservice.general.parser.service.parser.PersonParser;
+import ru.kinoservice.model.PersonParsedDto;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -21,8 +17,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 @AllArgsConstructor
 @Component
 @Scope("prototype")
+@Slf4j
 public class TaskParsePerson implements Runnable {
-    private static Logger logger = LoggerFactory.getLogger(MovieParseStarter.class);
 
     private Integer number;
     private AtomicInteger countErrorParsing;
@@ -40,14 +36,15 @@ public class TaskParsePerson implements Runnable {
     @Override
     public void run() {
         try {
-            ResponseEntity response = personParser.parsePersonPage(number);
-            if (response.getStatusCode() != HttpStatus.OK) return;
+            PersonParsedDto personDto = personParser.parse(number);
+            if (personDto == null) return;
+
             cinemaRepository.addPerson((Person) response.getBody());
-            logger.info("Parse and Add success person: " + number);
+            log.info("Parse and Add success person: " + number);
             countErrorParsing.set(0);
 
-        } catch (FeignException.Forbidden e) {
-            logger.error("Parse exception person: " + number);
+        } catch (Exception e) {
+            log.error("Parse exception person: " + number);
             countErrorParsing.incrementAndGet();
         } finally {
             threadLimit.incrementAndGet();
